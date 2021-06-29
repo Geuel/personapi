@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,5 +32,6 @@ public class Person {
 
     private LocalDate birthDate;
 
-    private List<Phone> phones;
+    @OneToMany(mappedBy = "person")
+    private List<Phone> phones = new ArrayList<>();
 }
