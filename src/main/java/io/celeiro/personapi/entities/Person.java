@@ -4,18 +4,14 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "tb_person")
-@Getter @Setter @AllArgsConstructor @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity @Builder @Data
+@AllArgsConstructor @NoArgsConstructor
 public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
     private Long id;
 
     @Column(nullable = false)
@@ -32,6 +28,6 @@ public class Person {
 
     private LocalDate birthDate;
 
-    @OneToMany(mappedBy = "person")
-    private List<Phone> phones = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    private List<Phone> phones;
 }
