@@ -1,0 +1,16 @@
+version: '3'
+volumes:
+  dados:
+services:
+  db:
+    image: postgres:12
+    container_name: bd_personapi
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234567
+      - POSTGRES_DB=bd_personapi
+    volumes:
+      # Volume dos dados
+      - dados:/var/lib/postgresql/data
