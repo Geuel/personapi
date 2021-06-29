@@ -3,7 +3,9 @@ package io.celeiro.personapi.controller;
 import io.celeiro.personapi.dto.message.MessageResponseDTO;
 import io.celeiro.personapi.entities.Person;
 import io.celeiro.personapi.repositories.PersonRepository;
+import io.celeiro.personapi.service.PersonService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -15,22 +17,16 @@ import java.util.List;
 @AllArgsConstructor
 public class PersonController {
 
-    private PersonRepository personRepository;
+    private PersonService personService;
 
     @GetMapping
     public List<Person> findAll() {
-        return personRepository.findAll();
+        return personService.findAll();
     }
 
-    @PostMapping()
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public MessageResponseDTO insert(@RequestBody Person person) {
-        Person savePerson = personRepository.save(person);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(savePerson.getId()).toUri();
-
-        return MessageResponseDTO
-                .builder()
-                .person(savePerson)
-                .build();
+        return personService.insert(person);
     }
 }
