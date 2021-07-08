@@ -3,12 +3,14 @@ package io.celeiro.personapi.service;
 import io.celeiro.personapi.dto.PersonDTO;
 import io.celeiro.personapi.dto.message.MessageResponseDTO;
 import io.celeiro.personapi.entities.Person;
+import io.celeiro.personapi.exception.PersonNotFoundException;
 import io.celeiro.personapi.mapper.PersonMapper;
 import io.celeiro.personapi.repositories.PersonRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,6 +29,13 @@ public class PersonService {
 
     }
 
+    public PersonDTO findById(Long id) throws PersonNotFoundException {
+        Person person = personRepository.findById(id)
+                .orElseThrow(() -> new PersonNotFoundException(id));
+
+        return personMapper.toDTO(person);
+    }
+
     public MessageResponseDTO insert(PersonDTO personDTO) {
         Person personToSave = personMapper.toModel(personDTO);
         Person savedPerson = personRepository.save(personToSave);
@@ -35,4 +44,5 @@ public class PersonService {
                 .person("Created person with ID " + savedPerson.getId())
                 .build();
     }
+
 }

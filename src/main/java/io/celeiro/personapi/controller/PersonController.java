@@ -3,6 +3,7 @@ package io.celeiro.personapi.controller;
 import io.celeiro.personapi.dto.PersonDTO;
 import io.celeiro.personapi.dto.message.MessageResponseDTO;
 import io.celeiro.personapi.entities.Person;
+import io.celeiro.personapi.exception.PersonNotFoundException;
 import io.celeiro.personapi.service.PersonService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,11 @@ public class PersonController {
     @GetMapping
     public List<PersonDTO> listAll() {
         return personService.listAll();
+    }
+
+    @GetMapping("/{id}")
+    public PersonDTO findById(@PathVariable Long id) throws PersonNotFoundException {
+        return personService.findById(id);
     }
 
     @PostMapping
