@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -18,8 +19,12 @@ public class PersonService {
 
     private final PersonMapper personMapper = PersonMapper.INSTANCE;
 
-    public List<Person> findAll() {
-        return personRepository.findAll();
+    public List<PersonDTO> listAll() {
+        List<Person> peopleToList = personRepository.findAll();
+        return  peopleToList.stream()
+                .map(personMapper::toDTO)
+                .collect(Collectors.toList());
+
     }
 
     public MessageResponseDTO insert(PersonDTO personDTO) {
