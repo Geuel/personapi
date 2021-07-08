@@ -1,11 +1,12 @@
 package io.celeiro.personapi.service;
 
+import io.celeiro.personapi.dto.PersonDTO;
 import io.celeiro.personapi.dto.message.MessageResponseDTO;
 import io.celeiro.personapi.entities.Person;
+import io.celeiro.personapi.mapper.PersonMapper;
 import io.celeiro.personapi.repositories.PersonRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -13,17 +14,20 @@ import java.util.List;
 @AllArgsConstructor
 public class PersonService {
 
-    private PersonRepository personRepository;
+    private final PersonRepository personRepository;
+
+    private final PersonMapper personMapper = PersonMapper.INSTANCE;
 
     public List<Person> findAll() {
         return personRepository.findAll();
     }
 
-    public MessageResponseDTO insert(Person person) {
-        Person savePerson = personRepository.save(person);
+    public MessageResponseDTO insert(PersonDTO personDTO) {
+        Person personToSave = personMapper.toModel(personDTO);
+        Person savedPerson = personRepository.save(personToSave);
         return MessageResponseDTO
                 .builder()
-                .person(savePerson)
+                .person("Created person with ID " + savedPerson.getId())
                 .build();
     }
 }

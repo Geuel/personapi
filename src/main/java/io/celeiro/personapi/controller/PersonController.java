@@ -1,15 +1,14 @@
 package io.celeiro.personapi.controller;
 
+import io.celeiro.personapi.dto.PersonDTO;
 import io.celeiro.personapi.dto.message.MessageResponseDTO;
 import io.celeiro.personapi.entities.Person;
-import io.celeiro.personapi.repositories.PersonRepository;
 import io.celeiro.personapi.service.PersonService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -26,7 +25,7 @@ public class PersonController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public MessageResponseDTO insert(@RequestBody Person person) {
-        return personService.insert(person);
+    public MessageResponseDTO insert(@RequestBody @Valid PersonDTO personDTO) {
+        return personService.insert(personDTO);
     }
 }
