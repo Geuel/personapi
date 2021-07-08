@@ -6,6 +6,7 @@ import io.celeiro.personapi.entities.Person;
 import io.celeiro.personapi.exception.PersonNotFoundException;
 import io.celeiro.personapi.service.PersonService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/people")
-@AllArgsConstructor
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PersonController {
 
     private PersonService personService;
