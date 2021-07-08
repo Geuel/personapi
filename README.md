@@ -2,8 +2,8 @@
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/Geuel/personapi/blob/main/LICENSE)
 
 # Sobre o projeto
-
 O projeto é uma API completa de processo realizado através da plataforma da [DIO](https://digitalinnovation.one/).
+Link da API no Heroku: https://personapi-geuel.herokuapp.com
 
 ## Layout
 ![Swagger](https://raw.githubusercontent.com/Geuel/assets/main/personapi/swagger.PNG)
